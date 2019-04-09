@@ -348,3 +348,293 @@ console.log(ages4[full.indexOf(true)]);
 //ES6
 console.log("Single line to find the index using Array & Arrow: "+ages4.findIndex(cur => cur >= 18));
 console.log("Single line to find the value using Array & Arrow: "+ages4.find(cur => cur >= 18));
+
+console.log();
+console.log();
+// Spread Operator
+console.log('Spread operator');
+
+function addFourAges(a,b,c,d){
+    return a+b+c+d;
+}
+
+var sum1 = addFourAges(18,30,12,21);
+console.log("Sum1: "+sum1);
+
+//ES5
+var ages = [18,30,12,21];
+var sum2 = addFourAges.apply(null, ages);
+console.log("Sum2 (with array with apply): "+sum2);
+
+//ES6
+const sum3 = addFourAges(...ages);
+console.log("Sum3 (with spread function): "+sum3);
+
+const familySmith = ['John', 'Jane', 'Mark'];
+const familyMiller = ['Mary','Bob','Ann'];
+const bigFamily = [...familySmith, 'Lily', ...familyMiller];
+console.log('bigFamily: '+bigFamily);
+
+const h = document.querySelector('h1');
+const boxes7 = document.querySelectorAll('.box');
+const all = [h, ...boxes7]; // this is a node list.
+console.log('h (node list for h1): '+h);
+console.log('boxes7 (node list for all .box): '+boxes7);
+console.log('all (combines node list): '+all);
+Array.from(all).forEach(cur => cur.style.color = 'purple' );
+
+console.log();
+console.log();
+// Rest Parameters >> converts to array with multiple parameters
+console.log('Rest Parameters');
+
+//ES5
+function isFullAges5() {
+    console.log('Default Arguments of the function >> '+arguments);
+    var argsArr = Array.prototype.slice.call(arguments);
+    console.log('argsArr (arguments into an array): '+argsArr);
+    
+    argsArr.forEach(function(cur){
+        //console.log((2016-cur) >= 18);
+        console.log(cur);
+    })
+    
+}
+
+isFullAges5(1990,1999,1988);
+
+//ES6
+function isFullAges6(...years){
+    //years.forEach(cur => console.log((2016-cur) >= 18));
+    years.forEach(cur => console.log('Arguments passed to function one by one: '+cur));
+}
+
+isFullAges6(1999, 1890, 1765, 2016, 2022);
+
+// passing the parameter as well
+console.log('      .. passing the parameter as well');
+//ES5
+function isFullAges7(limit) {
+    console.log('Default Arguments of the function >> '+arguments);
+    var argsArr = Array.prototype.slice.call(arguments,1);// "1" denotes the position in which slice function should start from
+                                                          // here in case, from 2nd (e.g. 0,1,2 etc), argument
+    console.log('argsArr (arguments into an array): '+argsArr);
+    
+    argsArr.forEach(function(cur){
+        //console.log((2016-cur) >= 18);
+        console.log('Arguments passed: '+cur);
+        
+    })
+    
+}
+
+isFullAges7(21, 1990,1999,1988);
+
+//ES6
+function isFullAges8(limit, ...years){
+    //years.forEach(cur => console.log((2016-cur) >= 18));
+    years.forEach(cur => console.log('Arguments passed to function one by one: '+cur+ ' and passed param is '+limit));
+}
+
+isFullAges8(11, 1999, 1890, 1765, 2016, 2022);
+
+console.log();
+console.log();
+// Default Parameters
+console.log('Default Parameters');
+
+// ES5
+function SmithPerson(firstName, yearOfBirth, lastName, nationality){
+    lastName === undefined ? lastName = 'Smith' : lastName = lastName;
+    nationality === undefined ? nationality = 'american' : nationality = nationality;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+}
+
+var john = new SmithPerson('John', 1990); // lastName & nationality are undefined if checked in console
+var emily = new SmithPerson('Emily',1988, 'Diaz', 'spanish');
+
+// ES6
+function HanksPerson(firstName, yearOfBirth,lastName = 'Hank', nationality = 'canadian'){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;    
+}
+
+var john = new HanksPerson('John', 1990); // lastName & nationality are undefined if checked in console
+var emily = new HanksPerson('Emily',1988, 'Diaz', 'spanish');
+
+console.log();
+console.log();
+// Maps
+console.log('Maps');
+
+// setting a map
+const question = new Map();
+question.set('question','What is the name?');
+question.set(1, 'Lx');
+question.set(2,'Ny');
+question.set(3,"Lm");
+question.set(4,'Jm');
+question.set('correct',3);
+question.set(true, 'Correct Answer');
+question.set(false, 'Wrong Answer');
+
+// retrieving from a map
+console.log(question.get('question'));
+console.log(question.size);
+
+if(question.has(4)){
+    //question.delete(4); // deleting the map item of index = 4
+    console.log('Answer 4');
+}
+
+//question.clear(); -- to clear everything in the map variable
+
+console.log('Traversing thru map');
+question.forEach((value, key) => console.log(`This is ${key} and value is ${value}`));
+
+for (let [key, value] of question.entries()){
+    //console.log(`This is ${key} and value is ${value}`);
+    if(typeof(key) === 'number'){
+        console.log(`Answer (and a number) ${key}: ${value}`);
+    }
+}
+
+
+const ans = parseInt(prompt("Write the corret answer?"));
+console.log(question.get(ans === question.get('correct'))); // "ans === question.get('correct')" returns a boolean hence using against, boolean keys of the map
+
+console.log();
+console.log();
+// Classes
+console.log('Classes');
+
+// ES5
+// function constructor
+var Person5 = function(name, yearOfBirth, job){
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function(){
+    var currYr = new Date().getFullYear();
+    var ageC = currYr - this.yearOfBirth;
+    console.log(this.yearOfBirth+' // '+currYr);
+    console.log('Person5 '+this.name+' age is '+ageC);
+}
+
+
+var john5 = new Person5('John',1982,'Teacher');
+john5.calculateAge();
+
+// ES6
+class Person6 {
+    constructor(name, yearOfBirth, job){
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;        
+    }
+    
+    calculateAge(){
+        var currYr = new Date().getFullYear();
+        var ageC = currYr - this.yearOfBirth;
+        console.log(this.yearOfBirth+' // '+currYr);
+        console.log('Person6 '+this.name+' age is '+ageC);       
+    }
+    
+    static greeting(){
+        console.log('Hey! This is the static method of the class "Person6"');
+    }
+}
+
+const john6 = new Person6('Mark',1977,'Builder');
+john6.calculateAge();
+// calling the static method of class "Person6"
+Person6.greeting();
+
+console.log();
+console.log();
+// Classes & Sub-Classes
+console.log('Classes & Sub-Classes');
+
+// ES5
+var Person7 = function(name, yearOfBirth, job){
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+Person7.prototype.calculateAge = function(){
+	var age = new Date().getFullYear() - this.yearOfBirth;
+	console.log('Age of '+this.name+' is '+age);
+}
+
+var Athelete7 = function(name, yearOfBirth, job, olympicGames, medals){
+	Person7.call(this, name, yearOfBirth, job);
+	this.olympicGames = olympicGames;
+	this.medals = medals;
+
+}
+
+Athelete7.prototype = Object.create(Person7.prototype);
+
+Athelete7.prototype.wonMedal = function(){
+	this.medals++;
+	console.log(this.name+' has won '+this.medals+' medals');
+
+}
+
+var johnAthlete = new Athelete7('John', 1982, 'Swimmer', 3, 4);
+
+johnAthlete.calculateAge();
+johnAthlete.wonMedal();
+
+// ES6
+class Person8 {
+    constructor(name, yearOfBirth, job){
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;        
+    }
+    
+    calculateAge(){
+        var currYr = new Date().getFullYear();
+        var ageC = currYr - this.yearOfBirth;
+        //console.log(this.yearOfBirth+' // '+currYr);
+        console.log('Person8: '+this.name+' age is '+ageC);       
+    }
+    
+    static greeting(){
+        console.log('Hey! This is the static method of the class "Person6"');
+    }
+}
+
+class Athelete8 extends Person8{
+	constructor(name, yearOfBirth, job, olympicGames, medals){
+		super(name, yearOfBirth, job);
+		this.olympicGames = olympicGames;
+		this.medals = medals;
+	
+	}	
+	
+	wonMedal(){
+		this.medals++;
+		console.log(this.name+' has won '+this.medals+' medals');
+	
+	}
+}
+
+const daveAthlete = new Athelete8('Dave', 1977, 'Gymnast', 4, 5);
+console.log();
+daveAthlete.wonMedal();
+daveAthlete.calculateAge();
+
+var mikeAthlete = new Athelete8('Mike', 1969, 'Runner', 5, 8);
+console.log();
+mikeAthlete.wonMedal();
+mikeAthlete.calculateAge();
