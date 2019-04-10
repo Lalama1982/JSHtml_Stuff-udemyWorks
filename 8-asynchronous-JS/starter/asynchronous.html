@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+		const second = () => {
+			console.log('second');
+		}
+		
+		const second2 = () => {
+			
+			setTimeout(() => {
+					console.log('second2  after 2000ms');
+				}, 2000);		
+		}
+		
+        const first = () => {
+			console.log('first');
+			second();
+			second2();
+			console.log('End');
+		}
+		
+		function firstOldWay(){
+			console.log('first');
+			second();
+			second2();
+			console.log('End');		
+		}
+		
+		//first();
+		//console.log('Calling Old Way');
+		firstOldWay();
+		
+    </script>
+</body>
+</html>
